@@ -3,25 +3,24 @@ class Ball{
   float y;
   float r;
   float speed;
-  int dy; // 1 for dy, -1 for up, 0 for none
-  int dx; // 1 for dx, -1 for left, 0 for none
+  int dy; // 1 for this.dy, -1 for up, 0 for none
+  int dx; // 1 for this.dx, -1 for left, 0 for none
   int direction;
   public Ball(){
     r = random(15,20);
     x = random(r,1000-r);
     y = random(100+(2*r),750-(2*r));
-    speed = random(3,5);
-    direction = 1;
+    this.speed = 0.4;// random(0,0.8);
     setDirection(1);
   }
   private void setDirection(int d){
     switch(d){
-      case 1: dy = -1; dx = 0; break; // up
-      case 2: dy = 1; dx = 0; break; // down
-      case 3: dy = 0; dx = -1; break; // left
-      default: dy = 0; dx = 1; break; // right
+      case 1: this.dy = -1; this.dx = 0; break; // up
+      case 2: this.dy = 1; this.dx = 0; break; // down
+      case 3: this.dy = 0; this.dx = -1; break; // left
+      default: this.dy = 0; this.dx = 1; break; // right
     }
-    direction = d;
+    this.direction = d;
   }
   
   public boolean intersects(Box box){
@@ -69,25 +68,21 @@ class Ball{
     return false;
   }
   public void draw(){
-    
-    fill(0,0,255);
-    rect(0,100,1000,650);
-    
-    fill(0,0,255);
-    stroke(0,0,255);
-    ellipse(x, y, r,r);
-    
-   
-    x = x + dx*speed;
-    
-    y = y + dy*speed;
-    if(x >= 1000+r){x = (-1)*r;}
-    else if(x< (-1*r)){x =1000+r;}
-    if(y >= 750+r){ y = 100+r; }
-    else if(y-r<=100){y = 750+r; }
-    
     fill(0,255,0);
     stroke(0,255,0);
     ellipse(x, y, r,r);
+  }
+  
+  public void move(){
+    x = x + this.dx*this.speed;
+    y = y + this.dy*this.speed;
+    //if(x >= 1000+r){x = (-1)*r;}
+    //else if(x< (-1*r)){x =1000+r;}
+    //if(y >= 750+r){ y = 100+r; }
+    //else if(y-r<=100){y = 750+r; }
+    if(x >= 1000+r){game = false; return;}
+    else if(x< (-1*r)){game = false; return;}
+    if(y >= 750+r){ game = false; return; }
+    else if(y-r<=100){game = false; return; }
   }
 }
