@@ -13,7 +13,7 @@ PFont f;
 int BOX_COUNT = 15;
 List<Box> boxes;
 Ball ball;
-
+int fileScore = 0;
 void setup(){
   size(1000,750);
   background(0,0,255);
@@ -28,6 +28,31 @@ void setup(){
     boxes.add(new Box());
   }
   ball = new Ball();
+  fileScore = getFileScore();
+  if(fileScore > highScore){
+    highScore = fileScore;
+  }
+}
+
+PrintWriter output;
+int highScore = 0;
+
+int getFileScore(){
+  
+  String[] fileLines = loadStrings("highScore.txt");
+  if(fileLines == null){
+    return -1;
+  }else{
+    int fileScore = Integer.parseInt(fileLines[0]);
+    return fileScore;
+  }
+}
+
+void writeHighScore(int s){
+  output = createWriter("highScore.txt");
+  output.println(s);
+  output.flush(); // Writes the remaining data to the file
+  output.close();
 }
 
 boolean paused = true;
@@ -40,11 +65,13 @@ void drawScore(){
   noFill();
   stroke(0);
   strokeWeight(4);
-  rect(740,15,200,50);
+  int scoreWidth = (score<100)?200:220;
+  rect(740,15,scoreWidth,50);
   text("Your Score: "+Integer.toString(score), 755, 50);
   textSize(16);
   text("Instructions:\n1. Press SPACE to start.                      2. Use arrow keys to control the ball.\n3. Do not hit the red boxes.                  4. Ball should not go out",10,30);
-  
+  textSize(18);
+  text("High Score: "+Integer.toString(highScore), 785, 90);
 }
 
 void drawGameOver(){
@@ -130,6 +157,10 @@ void draw(){
       box.draw();
     }
     ball.draw();
+    if(score > highScore){
+      writeHighScore(score);
+      highScore = score;
+    }
     drawGameOver();
   }
   
@@ -158,6 +189,5 @@ void keyPressed() {
       setup();
       time = 0;
       game = true;
-      //game = !game;
     }
 }
