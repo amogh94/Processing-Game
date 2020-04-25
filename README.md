@@ -1,3 +1,7 @@
+# Demo
+![Demo](https://github.com/amogh94/Processing-Game/blob/master/demo.gif "Demo")
+
+
 # Processing-Game
 
 Executable for Windows 64-bit:
