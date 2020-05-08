@@ -19,7 +19,7 @@ https://drive.google.com/file/d/1OTLKqxWqKP2wyXNoazxF0_Q4JYwKyc9O/view?usp=shari
 # Contribute
 
 All forms of contributions are welcome, such as:
-- CSS / UI Improvements
+- UI Improvements
 - Code review
 - Feature suggestion
 
